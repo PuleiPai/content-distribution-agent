@@ -1,0 +1,18 @@
+# Credentials & secrets
+.env
+*_cookies.json
+
+# Virtual environment (named after project)
+content-distribution-agent/
+
+# Debug screenshots
+debug/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.Python
+
+# macOS
+.DS_Store
