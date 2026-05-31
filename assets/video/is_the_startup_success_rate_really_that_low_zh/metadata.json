@@ -1,0 +1,33 @@
+{
+  "article_id": "is_the_startup_success_rate_really_that_low",
+  "language": "zh",
+  "source_url": "https://peiluai.netlify.app/posts/is-the-startup-success-rate-really-that-low/",
+  "title": "创业成功率真的很低吗？",
+  "summary": "创业成功率低描述的是群体统计结果，但它不能直接决定一个具体个体的未来。真正重要的是，一个持续学习、复盘、迭代的人，能不能不断提高自己的判断力和下一次决策质量。",
+  "tags": ["创业", "个人成长", "判断力", "迭代", "产品思维", "系统建设"],
+  "youtube": {
+    "title": "创业成功率真的很低吗？别人的成功率对你参考价值有限",
+    "description_file": "drafts/youtube_description_is_the_startup_success_rate_really_that_low_zh.md",
+    "tags": ["创业", "个人成长", "判断力", "迭代", "产品思维", "系统建设"],
+    "category": "27",
+    "privacy": "unlisted"
+  },
+  "tiktok": {
+    "title": "创业成功率真的很低吗？",
+    "description_file": "drafts/tiktok_caption_is_the_startup_success_rate_really_that_low_zh.txt",
+    "privacy": "private"
+  },
+  "xiaohongshu": {
+    "title": "创业不是彩票",
+    "description_file": "drafts/xiaohongshu_caption_is_the_startup_success_rate_really_that_low_zh.txt"
+  },
+  "bilibili": {
+    "title": "创业成功率真的很低吗？别人的成功率对你参考价值有限",
+    "description_file": "drafts/bilibili_description_is_the_startup_success_rate_really_that_low_zh.md",
+    "tags": ["创业", "个人成长", "判断力", "迭代", "产品思维"]
+  },
+  "recording": {
+    "script_file": "drafts/video_script_is_the_startup_success_rate_really_that_low_zh.md",
+    "section_marker_instruction": "每段开始先口头说录制段名，段落之间停顿 2 秒。剪辑时会按这些 marker 和静音段做语义对齐。"
+  }
+}

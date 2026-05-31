@@ -18,7 +18,7 @@ debug/
 assets/videos/
 assets/exports/
 assets/thumbnails/
-assets/video/
+assets/video/*/upload_info.json
 *.mov
 *.mp4
 
