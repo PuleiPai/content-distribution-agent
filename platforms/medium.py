@@ -141,10 +141,5 @@ def post_article(article_id: str, title: str, content: str, tags: list[str], can
 
         if url:
             print(f"  Published to Medium: {url}", flush=True)
-        print("  Browser left open — close it manually when done verifying.", flush=True)
-        try:
-            time.sleep(600)  # keep process alive so browser stays open (up to 10 min)
-        except KeyboardInterrupt:
-            pass
 
     return url
