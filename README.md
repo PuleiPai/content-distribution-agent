@@ -1,6 +1,7 @@
 # Content Distribution Agent
 
 Automates publishing blog articles from [peiluai.netlify.app](https://peiluai.netlify.app) to Twitter/X, LinkedIn, Medium, Substack, and Reddit.
+It also prepares article-derived video assets for YouTube, TikTok, Xiaohongshu, and Bilibili.
 
 ## How it works
 
@@ -14,6 +15,41 @@ python distribute.py --dry-run              # preview without posting
 ```
 
 By default, `all` runs the working stack: Twitter/X, LinkedIn, Medium, and Substack. Reddit remains available with `--platform reddit` once API access is approved.
+
+## Video workflow
+
+The video pipeline turns the same article entry in `content.py` into recording scripts, platform descriptions, captions, and upload metadata. The intended flow is:
+
+1. Generate the video assets.
+2. Record/edit the video manually or with your preferred editor.
+3. Put the finished `.mp4`/`.mov` under `assets/videos/`.
+4. Distribute to YouTube by API, or open browser-assisted upload flows for TikTok, Xiaohongshu, and Bilibili.
+
+Generate a script and platform metadata:
+
+```bash
+python video.py prepare --article is_the_startup_success_rate_really_that_low
+```
+
+Generate thumbnails too, if you already have a base image:
+
+```bash
+python video.py prepare \
+  --article is_the_startup_success_rate_really_that_low \
+  --thumbnail-base /path/to/base-image.jpg
+```
+
+After recording, dry-run distribution:
+
+```bash
+python video.py distribute \
+  --article is_the_startup_success_rate_really_that_low \
+  --platform all \
+  --video assets/videos/is_the_startup_success_rate_really_that_low.mov \
+  --dry-run
+```
+
+YouTube uses API upload and expects OAuth credentials at `secrets/youtube_client_secrets.json`. TikTok, Xiaohongshu, and Bilibili currently use visible browser-assisted handoffs so the agent can upload safely while you stay logged in.
 
 ## Setup
 
@@ -80,6 +116,13 @@ platforms/
   medium.py            # patchright browser automation (import + publish flow)
   substack.py          # python-substack API wrapper
   reddit.py            # PRAW-based link posting
+video.py               # video asset generation and distribution entry point
+video/
+  assets.py            # article -> video script/metadata/captions
+  generate_thumbnail.py
+video_platforms/
+  youtube.py           # YouTube Data API upload
+  browser_assisted.py  # TikTok/Xiaohongshu/Bilibili upload runbooks
 drafts/                # Medium and LinkedIn draft files
 .env.example           # credential template (copy to .env)
 ```

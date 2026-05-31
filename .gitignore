@@ -1,12 +1,26 @@
 # Credentials & secrets
 .env
 *_cookies.json
+client_secrets.json
+token.json
+token.pickle
+tiktok_credentials.json
+tiktok_token.json
+secrets/
 
 # Virtual environment (named after project)
 content-distribution-agent/
 
 # Debug screenshots
 debug/
+
+# Generated video assets
+assets/videos/
+assets/exports/
+assets/thumbnails/
+assets/video/
+*.mov
+*.mp4
 
 # Python cache
 __pycache__/
