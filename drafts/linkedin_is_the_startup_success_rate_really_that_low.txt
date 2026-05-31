@@ -4,7 +4,7 @@ True. Also: completely irrelevant to your specific situation.
 
 Here's the distinction that matters:
 
-That statistic describes a group average — what happened to a large pool of entrepreneurs in the past. It says nothing about what will happen to you, specifically, as you keep learning and iterating.
+That statistic describes a group average - what happened to a large pool of entrepreneurs in the past. It says nothing about what will happen to you, specifically, as you keep learning and iterating.
 
 Two reasons the number misleads:
 
@@ -18,15 +18,15 @@ So "the success rate is low" is really describing: a large group of undertrained
 
 Most importantly: entrepreneurship isn't a lottery.
 
-Lotteries have independent events — the last draw doesn't affect the next. Entrepreneurship is the opposite. Every action feeds directly into the next decision. Which means failure isn't pure loss — as long as you're still in the learning process, a failed attempt narrows the error space for everything that follows.
+Lotteries have independent events - the last draw doesn't affect the next. Entrepreneurship is the opposite. Every action feeds directly into the next decision. Which means failure isn't pure loss - as long as you're still in the learning process, a failed attempt narrows the error space for everything that follows.
 
 The right question isn't "what are my odds?" It's:
 
-→ Am I consistently getting useful feedback?
-→ Am I attributing outcomes accurately?
-→ Am I genuinely updating my judgment after each action?
+- Am I consistently getting useful feedback?
+- Am I attributing outcomes accurately?
+- Am I genuinely updating my judgment after each action?
 
-For someone who keeps answering yes — the odds shift over time.
+For someone who keeps answering yes - the odds shift over time.
 
 The most valuable founders aren't those who fail least. They're the ones whose judgment improves most noticeably after each iteration.
 

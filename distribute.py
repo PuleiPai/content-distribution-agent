@@ -16,9 +16,10 @@ from dotenv import load_dotenv
 load_dotenv(Path(__file__).parent / ".env")
 
 from content import ARTICLES
-from platforms import twitter, medium, reddit, substack
+from platforms import linkedin, medium, reddit, substack, twitter
 
-ALL_PLATFORMS = ["twitter", "medium", "reddit", "substack"]
+SUPPORTED_PLATFORMS = ["twitter", "linkedin", "medium", "reddit", "substack"]
+DEFAULT_PLATFORMS = ["twitter", "linkedin", "medium", "substack"]
 
 
 def distribute_article(article: dict, platforms: list[str], dry_run: bool):
@@ -48,6 +49,11 @@ def distribute_article(article: dict, platforms: list[str], dry_run: bool):
             dry_run=dry_run,
         )
         results["medium"] = url
+
+    if "linkedin" in platforms:
+        print("\n[LinkedIn]")
+        path = linkedin.prepare_post(article, dry_run=dry_run)
+        results["linkedin"] = path
 
     if "reddit" in platforms:
         print("\n[Reddit]")
@@ -84,9 +90,9 @@ def main():
     )
     parser.add_argument(
         "--platform",
-        choices=ALL_PLATFORMS + ["all"],
+        choices=SUPPORTED_PLATFORMS + ["all"],
         default="all",
-        help="Which platform to post to (default: all)",
+        help="Which platform to post to (default: all working platforms: twitter, linkedin, medium, substack)",
     )
     parser.add_argument(
         "--dry-run",
@@ -96,7 +102,7 @@ def main():
     args = parser.parse_args()
 
     articles = list(ARTICLES.values()) if args.article == "all" else [ARTICLES[args.article]]
-    platforms = ALL_PLATFORMS if args.platform == "all" else [args.platform]
+    platforms = DEFAULT_PLATFORMS if args.platform == "all" else [args.platform]
 
     if args.dry_run:
         print("DRY RUN MODE — no posts will be made\n")
