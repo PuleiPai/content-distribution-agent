@@ -1,5 +1,6 @@
 # Credentials & secrets
 .env
+docker.env
 *_cookies.json
 client_secrets.json
 token.json
@@ -18,6 +19,7 @@ debug/
 assets/videos/
 assets/exports/
 assets/thumbnails/
+assets/models/
 assets/video/*/upload_info.json
 *.mov
 *.mp4

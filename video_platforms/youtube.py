@@ -17,6 +17,23 @@ CLIENT_SECRETS = SECRETS_DIR / "youtube_client_secrets.json"
 LEGACY_CLIENT_SECRETS = ROOT / "client_secrets.json"
 TOKEN_FILE = SECRETS_DIR / "youtube_token.json"
 
+CATEGORY_IDS = {
+    "film": "1",
+    "autos": "2",
+    "music": "10",
+    "pets": "15",
+    "sports": "17",
+    "gaming": "20",
+    "people": "22",
+    "comedy": "23",
+    "entertainment": "24",
+    "news": "25",
+    "howto": "26",
+    "education": "27",
+    "science": "28",
+    "travel": "19",
+}
+
 SCOPES = [
     "https://www.googleapis.com/auth/youtube.upload",
     "https://www.googleapis.com/auth/youtube",
@@ -57,13 +74,23 @@ def get_authenticated_service():
 
 def upload_video(
     video_path: str,
-    thumbnail_path: str,
+    thumbnail_path: str | None,
     title: str,
     description: str,
     tags: list[str],
     category_id: str,
-    privacy: str = "unlisted",
+    privacy: str = "private",
 ) -> str:
+    video_file = Path(video_path).expanduser()
+    if not video_file.exists():
+        raise FileNotFoundError(f"YouTube video file not found: {video_file}")
+
+    thumbnail_file = Path(thumbnail_path).expanduser() if thumbnail_path else None
+    if thumbnail_file and not thumbnail_file.exists():
+        raise FileNotFoundError(f"YouTube thumbnail file not found: {thumbnail_file}")
+
+    category_id = CATEGORY_IDS.get(category_id, category_id)
+
     youtube = get_authenticated_service()
     body = {
         "snippet": {
@@ -78,8 +105,8 @@ def upload_video(
         },
     }
 
-    media = MediaFileUpload(video_path, mimetype="video/*", resumable=True, chunksize=10 * 1024 * 1024)
-    print(f"Uploading to YouTube: {video_path}")
+    media = MediaFileUpload(str(video_file), mimetype="video/*", resumable=True, chunksize=10 * 1024 * 1024)
+    print(f"Uploading to YouTube as {privacy}: {video_file}")
     request = youtube.videos().insert(part=",".join(body.keys()), body=body, media_body=media)
 
     response = None
@@ -91,11 +118,11 @@ def upload_video(
     video_id = response["id"]
     print(f"\nUpload complete. Video ID: {video_id}")
 
-    if thumbnail_path:
+    if thumbnail_file:
         print("Setting thumbnail...")
         youtube.thumbnails().set(
             videoId=video_id,
-            media_body=MediaFileUpload(thumbnail_path, mimetype="image/jpeg"),
+            media_body=MediaFileUpload(str(thumbnail_file), mimetype="image/jpeg"),
         ).execute()
         print("Thumbnail set.")
 
@@ -115,7 +142,7 @@ def main() -> None:
     parser.add_argument("--description", required=True)
     parser.add_argument("--tags", default="")
     parser.add_argument("--category", default="22")
-    parser.add_argument("--privacy", default="unlisted")
+    parser.add_argument("--privacy", default="private", choices=["private", "unlisted", "public"])
     args = parser.parse_args()
 
     tags = [tag.strip() for tag in args.tags.split(",") if tag.strip()]

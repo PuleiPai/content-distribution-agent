@@ -192,7 +192,7 @@ def build_video_metadata(article: dict) -> dict:
             "description": description,
             "tags": tags,
             "category": _category(title, body),
-            "privacy": "unlisted",
+            "privacy": "private",
         },
         "tiktok": {
             "title": title[:150],
@@ -249,4 +249,15 @@ def load_metadata(article_id: str) -> dict:
     path = ASSET_ROOT / article_id / "metadata.json"
     if not path.exists():
         raise FileNotFoundError(f"Missing video metadata: {path}. Run `python video.py prepare --article {article_id}` first.")
-    return json.loads(path.read_text(encoding="utf-8"))
+    metadata = json.loads(path.read_text(encoding="utf-8"))
+    for platform in ("youtube", "tiktok", "xiaohongshu", "bilibili"):
+        data = metadata.get(platform)
+        if not isinstance(data, dict) or data.get("description"):
+            continue
+        description_file = data.get("description_file")
+        if not description_file:
+            continue
+        description_path = ROOT / description_file
+        if description_path.exists():
+            data["description"] = description_path.read_text(encoding="utf-8").strip()
+    return metadata

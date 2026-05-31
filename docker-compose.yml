@@ -1,0 +1,15 @@
+services:
+  agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: creator-distribution-platform:local
+    working_dir: /app
+    environment:
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - .:/app
+      - ./assets:/app/assets
+      - ./drafts:/app/drafts
+      - ./secrets:/app/secrets:ro
+    command: ["python", "--version"]

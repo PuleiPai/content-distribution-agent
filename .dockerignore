@@ -1,0 +1,36 @@
+.git
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+.Python
+
+# Local Python environments
+content-distribution-agent/
+.venv/
+venv/
+
+# Secrets and browser session files
+.env
+docker.env
+secrets/
+*_cookies.json
+client_secrets.json
+token.json
+token.pickle
+tiktok_credentials.json
+tiktok_token.json
+
+# Generated/debug artifacts and large media
+debug/
+assets/videos/
+assets/exports/
+assets/thumbnails/
+assets/models/
+*.mov
+*.mp4
+
+# Tool caches
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/

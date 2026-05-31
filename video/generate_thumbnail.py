@@ -13,7 +13,7 @@ PLATFORM_SPECS = {
     "vertical": {"w": 1080, "h": 1920, "font_size": 72, "gradient_h": 500, "padding": 60},
     "tiktok": {"w": 1080, "h": 1920, "font_size": 72, "gradient_h": 500, "padding": 60},
     "xiaohongshu": {"w": 1080, "h": 1440, "font_size": 72, "gradient_h": 460, "padding": 60},
-    "bilibili": {"w": 1280, "h": 720, "font_size": 76, "gradient_h": 300, "padding": 60},
+    "bilibili": {"w": 1280, "h": 960, "font_size": 76, "gradient_h": 340, "padding": 70},
 }
 
 

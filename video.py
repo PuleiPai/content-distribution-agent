@@ -36,6 +36,8 @@ def _default_thumbnail(article_id: str, platform: str) -> Path:
 
 
 def prepare(args: argparse.Namespace) -> None:
+    if args.article not in ARTICLES:
+        raise SystemExit(f"Unknown article: {args.article}")
     article = ARTICLES[args.article]
     paths = write_video_assets(article, target_minutes=args.target_minutes)
     print("\nGenerated video assets:")
@@ -82,8 +84,9 @@ def distribute(args: argparse.Namespace) -> None:
             thumbnail = Path(args.thumbnail).expanduser() if args.thumbnail else _default_thumbnail(article_id, platform)
             if not thumbnail.exists():
                 raise SystemExit(f"YouTube thumbnail not found: {thumbnail}. Run prepare with --thumbnail-base or pass --thumbnail.")
+            privacy = args.privacy or yt.get("privacy", "private")
             if args.dry_run:
-                print(json.dumps({"video": str(video_path), "thumbnail": str(thumbnail), **yt}, indent=2))
+                print(json.dumps({"video": str(video_path), "thumbnail": str(thumbnail), **yt, "privacy": privacy}, indent=2))
                 results[platform] = "dry-run"
             else:
                 from video_platforms import youtube
@@ -95,7 +98,7 @@ def distribute(args: argparse.Namespace) -> None:
                     description=yt["description"],
                     tags=yt["tags"],
                     category_id=yt["category"],
-                    privacy=yt.get("privacy", "unlisted"),
+                    privacy=privacy,
                 )
         else:
             results[platform] = browser_assisted.prepare_browser_handoff(
@@ -115,16 +118,21 @@ def main() -> None:
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     prepare_parser = subparsers.add_parser("prepare", help="Generate recording script and platform metadata")
-    prepare_parser.add_argument("--article", choices=list(ARTICLES.keys()), required=True)
+    prepare_parser.add_argument("--article", required=True)
     prepare_parser.add_argument("--target-minutes", type=int, default=5)
     prepare_parser.add_argument("--thumbnail-base", help="Optional base image to generate YouTube/vertical thumbnails")
     prepare_parser.set_defaults(func=prepare)
 
     distribute_parser = subparsers.add_parser("distribute", help="Distribute a finished video")
-    distribute_parser.add_argument("--article", choices=list(ARTICLES.keys()), required=True)
+    distribute_parser.add_argument("--article", required=True)
     distribute_parser.add_argument("--platform", default="youtube", help="youtube,tiktok,xiaohongshu,bilibili,all")
     distribute_parser.add_argument("--video", help="Path to finished .mp4/.mov")
     distribute_parser.add_argument("--thumbnail", help="Path to YouTube thumbnail")
+    distribute_parser.add_argument(
+        "--privacy",
+        choices=["private", "unlisted", "public"],
+        help="Override YouTube visibility. Defaults to metadata privacy, usually private.",
+    )
     distribute_parser.add_argument("--dry-run", action="store_true")
     distribute_parser.set_defaults(func=distribute)
 
