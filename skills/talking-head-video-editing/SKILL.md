@@ -206,6 +206,7 @@ Cover rules:
 - keep important text inside platform-safe margins
 - do not over-darken the user's image unless requested
 - verify with an image preview before finalizing
+- For Xiaohongshu web uploads, wait for the intelligent cover thumbnails to finish generating and select the first recommended cover. Do not remove creator-added traffic-support tags such as `#好视频扶持计划`.
 
 ## Platform Packaging
 
